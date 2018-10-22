@@ -54,7 +54,7 @@ CREATE TABLE carreras
 CREATE TABLE maestros
 (
 	no_empleado VARCHAR(16) PRIMARY KEY,
-	carrera INT REFERENCES carreras(id),
+	carrera INT(11) REFERENCES carreras(id),
 	nombre VARCHAR(32) NOT NULL,
 	apellidos VARCHAR(32) NOT NULL,
 	email VARCHAR(32) NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE alumnos
 	nombre VARCHAR(32) NOT NULL,
 	apellidos VARCHAR(32) NOT NULL,
 	carrera INT REFERENCES carreras(id),
-	tutor INT REFERENCES maestros(no_empleado)
+	tutor VARCHAR(11) REFERENCES maestros(no_empleado)
 );
 
 -- --------------------------------------------------------
@@ -91,11 +91,11 @@ CREATE TABLE categorias_tutorias
 CREATE TABLE tutorias
 (
 	id INT(11) PRIMARY KEY AUTO_INCREMENT,
-	id_alumno INT(11) REFERENCES alumnos(id),
-	id_tutor INT(11) REFERENCES maestros(id),
+	id_alumno VARCHAR(11) REFERENCES alumnos(matricula),
+	id_tutor VARCHAR(11) REFERENCES maestros(no_empleado),
 	fecha DATE NOT NULL,
 	hora TIME NOT NULL,
-	tipo_tutoria VARCHAR(16) NOT NULL,
+	tipo_tutoria VARCHAR(36) NOT NULL,
 	tipo_atencion INT REFERENCES categorias_tutorias(id),
 	descripcion VARCHAR(256) NOT NULL
 );
@@ -120,8 +120,8 @@ VALUES ('10101',1,'Louis Henrich', 'Gomms Corner','admin@admin.com','admin');
 -- Volcado de datos para la tabla `alumnos`
 --
 INSERT INTO  alumnos (matricula, nombre, apellidos, carrera, tutor)
-VALUES ('1430548', 'Maria Daniela', 'Castro Moran', 1, 1), 
-('1330494', 'Cristina ', 'Aguilera', 2, 1);
+VALUES ('1430548', 'Maria Daniela', 'Castro Moran', 1, '10101'), 
+('1330494', 'Cristina ', 'Aguilera', 2, '10101');
 
 INSERT INTO  categorias_tutorias (nombre)
 VALUES ('Economica'), ('Enfermedad');
